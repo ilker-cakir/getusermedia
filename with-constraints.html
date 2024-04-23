@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Camera Stream with Capture</title>
+  </head>
+  <body>
+    <video id="videoElement" autoplay></video>
+    <button id="captureButton">Capture Frame</button>
+    <canvas id="canvasElement" style="display: none"></canvas>
+    <img id="capturedImage" alt="Captured image" style="display: block" />
+    <script>
+      const CAMERA_ADV_RES_CONSTRAINTS = [
+        { height: 1440, width: 1920 },
+        { height: 1392, width: 1856 },
+        { height: 1200, width: 1600 },
+        { height: 1080, width: 1440 },
+        { height: 1050, width: 1400 },
+        { height: 960, width: 1280 },
+        { height: 864, width: 1152 },
+        { height: 768, width: 1024 },
+        { height: 720, width: 960 },
+        { height: 600, width: 800 },
+        { height: 480, width: 640 },
+      ];
+
+      const CAMERA_ADV_RATIO_CONSTRAINTS = [
+        { height: 1440, aspectRatio: 1.333 },
+        { height: 1392, aspectRatio: 1.333 },
+        { height: 1200, aspectRatio: 1.333 },
+        { height: 1080, aspectRatio: 1.333 },
+        { height: 1050, aspectRatio: 1.333 },
+        { height: 960, aspectRatio: 1.333 },
+        { height: 864, aspectRatio: 1.333 },
+        { height: 768, aspectRatio: 1.333 },
+        { height: 720, aspectRatio: 1.333 },
+        { height: 600, aspectRatio: 1.333 },
+        { height: 480, aspectRatio: 1.333 },
+      ];
+
+      let CAMERA_CONSTRAINTS = {
+        facingMode: "environment",
+        height: { min: 480, ideal: 1440, max: 1440 },
+        width: { min: 640, ideal: 1920, max: 1920 },
+        frameRate: 30,
+        aspectRatio: 1.333,
+        advanced: CAMERA_ADV_RES_CONSTRAINTS,
+      };
+
+      //! Known issue in Android Firefox.
+      // With some Android devices Firefox fail to adjust the orientation of the camera when device orientation change.
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=874569. With or without any constraints except the facingMode,
+      // the behaviour is still same for same devices - so it's not constraint related.
+      export function getCameraConstraints() {
+        const { mediaDevices } = navigator;
+        const SUPPORTED_CONSTRAINTS = mediaDevices.getSupportedConstraints();
+        // Aspect Ratio constraints is not supported for all browsers.
+        // If it's supported then we will use RATIO_CONSTRAINTS instead of RES_CONSTRAINTS.
+        // Ex. Firefox Android does not support aspectRatio constraint - in this case { width, height } will be used.
+        if ("aspectRatio" in SUPPORTED_CONSTRAINTS) {
+          CAMERA_CONSTRAINTS.advanced = CAMERA_ADV_RATIO_CONSTRAINTS;
+        }
+
+        // For some reason Chrome Android does not display anything above 1080p. (black output issue)
+        // In this case modify the constraints to target 1080px in height with corresponding width. Either via aspectRatio or width.
+        // https://wkdauto.atlassian.net/browse/CFE-14221
+        const shouldLimit1080 = /Android/.test(window.navigator.userAgent);
+        if (shouldLimit1080) {
+          CAMERA_CONSTRAINTS.width = { min: 640, ideal: 1440, max: 1440 };
+          CAMERA_CONSTRAINTS.height = { min: 480, ideal: 1080, max: 1080 };
+          CAMERA_CONSTRAINTS.advanced = CAMERA_CONSTRAINTS.advanced.filter(
+            (c) => {
+              if (typeof c.height === "number") return c.height <= 1080;
+              return false;
+            }
+          );
+        }
+        return CAMERA_CONSTRAINTS;
+      }
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>

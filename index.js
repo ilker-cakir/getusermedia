@@ -5,8 +5,17 @@ document.addEventListener("DOMContentLoaded", function () {
   var captureButton = document.getElementById("captureButton");
 
   if (navigator.mediaDevices.getUserMedia) {
+    let constraints;
+    if (window.getCameraConstraints) {
+      constraints = getCameraConstraints();
+    } else {
+      constraints = { video: true };
+    }
+
+    console.log(">>> Using Constraints:", constraints);
+
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia(constraints)
       .then(function (stream) {
         video.srcObject = stream;
       })
