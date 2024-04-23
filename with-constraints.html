@@ -5,10 +5,26 @@
     <title>Camera Stream with Capture</title>
   </head>
   <body>
-    <video id="videoElement" autoplay></video>
-    <button id="captureButton">Capture Frame</button>
-    <canvas id="canvasElement" style="display: none"></canvas>
-    <img id="capturedImage" alt="Captured image" style="display: block" />
+    <div style="display: flex; flex-direction: column">
+      <div style="display: flex">
+        <video id="videoElement" autoplay></video>
+        <img id="capturedImage" alt="Captured image" style="display: block" />
+      </div>
+      <button id="captureButton" style="height: 55px; margin: 12px 0">
+        Capture Frame
+      </button>
+      <canvas id="canvasElement" style="display: none"></canvas>
+      <div style="display: flex">
+        <div style="width: 50%">
+          <h3>Given Constraints</h3>
+          <pre id="constraints"></pre>
+        </div>
+        <div style="width: 50%">
+          <h3>Applied Stream Constraints</h3>
+          <pre id="applied-constraints"></pre>
+        </div>
+      </div>
+    </div>
     <script>
       const CAMERA_ADV_RES_CONSTRAINTS = [
         { height: 1440, width: 1920 },
@@ -51,7 +67,7 @@
       // With some Android devices Firefox fail to adjust the orientation of the camera when device orientation change.
       // https://bugzilla.mozilla.org/show_bug.cgi?id=874569. With or without any constraints except the facingMode,
       // the behaviour is still same for same devices - so it's not constraint related.
-      export function getCameraConstraints() {
+      function getCameraConstraints() {
         const { mediaDevices } = navigator;
         const SUPPORTED_CONSTRAINTS = mediaDevices.getSupportedConstraints();
         // Aspect Ratio constraints is not supported for all browsers.
@@ -75,7 +91,7 @@
             }
           );
         }
-        return CAMERA_CONSTRAINTS;
+        return { video: CAMERA_CONSTRAINTS };
       }
     </script>
     <script src="index.js"></script>

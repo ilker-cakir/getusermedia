@@ -5,10 +5,26 @@
     <title>Camera Stream with Capture</title>
   </head>
   <body>
-    <video id="videoElement" autoplay></video>
-    <button id="captureButton">Capture Frame</button>
-    <canvas id="canvasElement" style="display: none"></canvas>
-    <img id="capturedImage" alt="Captured image" style="display: block" />
+    <div style="display: flex; flex-direction: column">
+      <div style="display: flex">
+        <video id="videoElement" autoplay></video>
+        <img id="capturedImage" alt="Captured image" style="display: block" />
+      </div>
+      <button id="captureButton" style="height: 55px; margin: 12px 0">
+        Capture Frame
+      </button>
+      <canvas id="canvasElement" style="display: none"></canvas>
+      <div style="display: flex">
+        <div style="width: 50%">
+          <h3>Given Constraints</h3>
+          <pre id="constraints"></pre>
+        </div>
+        <div style="width: 50%">
+          <h3>Applied Stream Constraints</h3>
+          <pre id="applied-constraints"></pre>
+        </div>
+      </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>

@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   var video = document.getElementById("videoElement");
+  var constraintsEl = document.getElementById("constraints");
+  var appliedConstraintsEl = document.getElementById("applied-constraints");
   var canvas = document.getElementById("canvasElement");
   var img = document.getElementById("capturedImage");
   var captureButton = document.getElementById("captureButton");
@@ -11,13 +13,19 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       constraints = { video: true };
     }
-
+    constraintsEl.innerHTML = JSON.stringify(constraints, null, 2);
     console.log(">>> Using Constraints:", constraints);
 
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(function (stream) {
         video.srcObject = stream;
+
+        appliedConstraintsEl.innerHTML = JSON.stringify(
+          stream.getVideoTracks()[0].getConstraints(),
+          null,
+          2
+        );
       })
       .catch(function (error) {
         console.error("Error while starting camera stream", error);
