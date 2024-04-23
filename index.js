@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         video.srcObject = stream;
 
         appliedConstraintsEl.innerHTML = JSON.stringify(
-          stream.getVideoTracks()[0].getConstraints(),
+          stream.getVideoTracks()[0].getSettings(),
           null,
           2
         );
