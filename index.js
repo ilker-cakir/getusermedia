@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log(
     "MEDIA_SUPPORTED_CONSTRAINTS",
-    mediaDevices.getSupportedConstraints()
+    navigator.mediaDevices.getSupportedConstraints()
   );
 
   if (navigator.mediaDevices.getUserMedia) {
