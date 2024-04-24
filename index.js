@@ -18,7 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.getCameraConstraints) {
       constraints = getCameraConstraints();
     } else {
-      constraints = { video: true, audio: false, facingMode: "environment" };
+      constraints = {
+        video: { facingMode: "environment" },
+        audio: false,
+      };
     }
     constraintsEl.innerHTML = JSON.stringify(constraints, null, 2);
 
