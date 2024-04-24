@@ -7,12 +7,23 @@
   <body>
     <div style="display: flex; flex-direction: column">
       <div style="display: flex">
-        <video
-          style="width: 50%"
-          id="videoElement"
-          autoplay="true"
-          playsinline
-        ></video>
+        <div style="width: 50%">
+          <video id="videoElement" autoplay="true" playsinline></video>
+          <video crossorigin="anonymous" playsinline autoplay muted>
+            <source
+              src="/laser-hatchback-overlay-640x480.webm"
+              type="video/webm"
+            />
+            <source
+              src="/laser-hatchback-overlay-640x480.mov"
+              type='video/mp4; codecs="hvc1"'
+            />
+            <source
+              src="/laser-hatchback-overlay-640x480.mov"
+            />
+          </video>
+        </div>
+
         <img
           style="width: 50%"
           id="capturedImage"
