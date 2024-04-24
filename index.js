@@ -5,13 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
   var canvas = document.getElementById("canvasElement");
   var img = document.getElementById("capturedImage");
   var captureButton = document.getElementById("captureButton");
-
-  console.log(
-    "MEDIA_SUPPORTED_CONSTRAINTS",
-    navigator.mediaDevices.getSupportedConstraints()
-  );
+  var supportedConstraints = document.getElementById("supported-constraints");
 
   if (navigator.mediaDevices.getUserMedia) {
+    supportedConstraints.innerHTML = JSON.stringify(
+      navigator.mediaDevices.getSupportedConstraints(),
+      null,
+      2
+    );
+
     let constraints;
     if (window.getCameraConstraints) {
       constraints = getCameraConstraints();
