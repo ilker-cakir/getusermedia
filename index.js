@@ -11,9 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.getCameraConstraints) {
       constraints = getCameraConstraints();
     } else {
-      constraints = { video: true };
+      constraints = { video: true, audio: false };
     }
     constraintsEl.innerHTML = JSON.stringify(constraints, null, 2);
+    console.log(
+      "MEDIA_SUPPORTED_CONSTRAINTS",
+      mediaDevices.getSupportedConstraints()
+    );
+
     console.log(">>> Using Constraints:", constraints);
 
     navigator.mediaDevices
