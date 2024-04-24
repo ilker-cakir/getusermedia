@@ -73,8 +73,8 @@
       // https://bugzilla.mozilla.org/show_bug.cgi?id=874569. With or without any constraints except the facingMode,
       // the behaviour is still same for same devices - so it's not constraint related.
       function getCameraConstraints() {
-        const { mediaDevices } = navigator;
-        const SUPPORTED_CONSTRAINTS = mediaDevices.getSupportedConstraints();
+        const SUPPORTED_CONSTRAINTS =
+          navigator.mediaDevices.getSupportedConstraints();
         // Aspect Ratio constraints is not supported for all browsers.
         // If it's supported then we will use RATIO_CONSTRAINTS instead of RES_CONSTRAINTS.
         // Ex. Firefox Android does not support aspectRatio constraint - in this case { width, height } will be used.
