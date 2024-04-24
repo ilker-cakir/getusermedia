@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
   var img = document.getElementById("capturedImage");
   var captureButton = document.getElementById("captureButton");
 
+  console.log(
+    "MEDIA_SUPPORTED_CONSTRAINTS",
+    mediaDevices.getSupportedConstraints()
+  );
+
   if (navigator.mediaDevices.getUserMedia) {
     let constraints;
     if (window.getCameraConstraints) {
@@ -14,12 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
       constraints = { video: true, audio: false };
     }
     constraintsEl.innerHTML = JSON.stringify(constraints, null, 2);
-    console.log(
-      "MEDIA_SUPPORTED_CONSTRAINTS",
-      mediaDevices.getSupportedConstraints()
-    );
 
-    console.log(">>> Using Constraints:", constraints);
+    console.log(">>> Using Constraints:", JSON.stringify(constraints, null, 2));
 
     navigator.mediaDevices
       .getUserMedia(constraints)
