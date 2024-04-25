@@ -7,12 +7,33 @@
   <body>
     <div style="display: flex; flex-direction: column">
       <div style="display: flex">
-        <video
-          style="width: 50%"
-          id="videoElement"
-          autoplay="true"
-          playsinline
-        ></video>
+        <div style="width: 50%">
+          <video
+            style="width: 100%"
+            id="videoElement"
+            autoplay="true"
+            playsinline
+          ></video>
+          <video
+            style="width: 50%; position: absolute; top: 0; left: 0"
+            crossorigin="anonymous"
+            playsinline
+            autoplay
+            muted
+          >
+            <source
+              src="//content.wirkaufendeinauto.de/static/car_images/laser-hatchback-overlay-640x480.mov"
+              type='video/mp4; codecs="hvc1"'
+            />
+            <source
+              src="//content.wirkaufendeinauto.de/static/car_images/laser-hatchback-overlay-640x480.mov"
+            />
+            <source
+              src="//content.wirkaufendeinauto.de/static/car_images/laser-hatchback-overlay-640x480.webm"
+              type="video/webm"
+            />
+          </video>
+        </div>
         <img
           style="width: 50%"
           id="capturedImage"
